@@ -1,25 +1,27 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useEffect } from 'react';
+
 import './App.css';
 
-function App() {
+const App = () => {
+
+  useEffect(() => {
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+      const constraints = { audio: true };
+
+      const audio = document.querySelector('audio');
+
+      navigator.mediaDevices.getUserMedia(constraints).then((stream) => {audio.srcObject = stream});
+
+    } else {
+      alert('getUserMedia() is not supported by your browser');
+    }
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <section className="App-stuff">
+      <h1>Trying out some audio stuff</h1>
+      <audio autoPlay controls/>
+    </section>
   );
 }
 
